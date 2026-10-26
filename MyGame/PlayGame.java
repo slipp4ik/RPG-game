@@ -65,12 +65,12 @@ public class PlayGame {
     public static void fight(Hero hero, Goblin goblin) throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         Random random = new Random();
-    do
-    {
+        do
+        {
         System.out.println("\n");
         System.out.println("Enter how many attacks you want to make: "+"\n");
         int NumAttack = sc.nextInt();
-
+        int hits = 0;
         for (int i = 0; i <= NumAttack-1; i++) 
         {
             int chance = random.nextInt(10);
@@ -78,6 +78,7 @@ public class PlayGame {
             if (chance <= 6) 
                {
                 goblin.takeDamage(hero.getDamage());
+                hero.setHits(hero.getHits() + 1);
                 Thread.sleep(500);
                 System.out.println(GREEN+"Hero " + hero.getName()+RESET + " hits goblin " + goblin.getName() + " for "
                         +RED+ hero.getDamage()+RESET + " and the HP after attack is " +ORANGE+ goblin.getHP()+RESET);
@@ -98,12 +99,28 @@ public class PlayGame {
                     System.out.println(RED+"Hero "+hero.getName()+" lost, retry fight"+RESET);
                     break;
                 }
-          
             }
         }
-    }while(hero.isAlive() && goblin.isAlive());
-    
+        }while(hero.isAlive() && goblin.isAlive());
+
     }
+    public static void XpGain(Hero hero, Goblin goblin)
+    {
+        int hits = hero.getHits();
+        int gain = 0;
+        if(hits <= 5)
+            {
+                gain=hero.getExperience()+50;
+                hero.setExperience(gain);
+            }
+        else if (hits >5) 
+            {
+                gain = hero.getExperience()+25;
+                hero.setExperience(gain);
+            }
+        
+    }
+    
 
     public static void main(String[] args) throws InterruptedException {
         Hero hero = new Hero("Albin", 100, 1, 0, 100, 10);
@@ -114,5 +131,10 @@ public class PlayGame {
         int option = sc.nextInt();
         OptMenu(option);
         fight(hero, goblin);
+        XpGain(hero,goblin);
+        System.out.println(hero.getHits());
+        hero.ShowStats();
+        
+        
     }
 }

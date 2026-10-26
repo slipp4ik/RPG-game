@@ -5,6 +5,7 @@ public class Hero extends Character
     private int experience;
     private int mana;
     private int damage;
+    private int hits;
 
     public Hero(String Name, int HP, int Level, int experience, int mana, int damage)
     {
@@ -38,6 +39,17 @@ public class Hero extends Character
         this.damage = damage;
     }
 
-    
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
+    }
+
+   public void ShowStats()
+  {
+    System.out.println("Your current stats are: \n"+"Level: "+getLevel()+"\n"+"Experience: "+experience+"\n");
+  }
     
 }
